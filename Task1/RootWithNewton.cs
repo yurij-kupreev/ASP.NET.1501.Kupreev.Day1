@@ -8,18 +8,17 @@ namespace Task1
 {
     public static class RootWithNewton
     {
-        private const double accuracy = 0.000001;
-        private static double xfirst, xlast = 0;
-        public static double Root(double number, int power)
+        public static double Root(double number, int power, double accuracy = 0.000001)
         {
-            if (number < 0 || power < 1 || number > 999999) throw new ArgumentException();
-            xfirst = 10000001;
-            xlast = 10000000;
-            while ((xfirst - xlast) > accuracy)
+            if (number < 0 || power < 1 || accuracy > 0.1 || accuracy <= 0) throw new ArgumentException();
+            double xfirst, xlast;
+            xlast = number;
+            do
             {
                 xfirst = xlast;
-                xlast = (1 / (double)power) * ((power - 1) * xfirst + number / Power(xfirst, power - 1));
-            }  
+                xlast = (1.0 / power) * ((power - 1) * xfirst + number / Power(xfirst, power - 1));
+            }
+            while ((xfirst - xlast) > accuracy);
             return xlast;
         }
 
